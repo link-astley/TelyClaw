@@ -1,0 +1,28 @@
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.venv/
+venv/
+env/
+
+# ---- 运行时数据（含密钥，绝不入库）----
+# data/ 目录下只保留 seed_posts.json（演示用的模拟数据模板）。
+# 账号、设置（含 DeepSeek API Key）、草稿、发布记录、上次检测结果都是运行时生成的，
+# 首次启动会自动重建，不进版本库。
+telyclaw/data/*
+!telyclaw/data/seed_posts.json
+
+# ---- 编辑器 / 系统 ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# ---- 工作区辅助目录 ----
+.workbuddy/
+
+# ---- 日志 ----
+*.log

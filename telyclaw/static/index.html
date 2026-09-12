@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TelyClaw · X 热点雷达</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">🐾</span>
+    <div>
+      <div class="brand-name">TelyClaw</div>
+      <div class="brand-sub">X 热点雷达 · 从盯人到发帖</div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <button class="tab active" data-tab="settings">设置</button>
+    <button class="tab" data-tab="monitor">监控</button>
+    <button class="tab" data-tab="studio">内容工作台</button>
+    <button class="tab" data-tab="records">发布记录</button>
+  </nav>
+  <div class="ai-state" id="aiState"></div>
+</header>
+
+<div class="demo-banner">
+  ⚠️ 演示数据 · 页面内所有帖子内容均为 AI 模拟生成，<b>不代表任何真实用户的言论</b>
+</div>
+
+<main class="wrap">
+
+  <!-- ============================ 设置 ============================ -->
+  <section class="page" id="page-settings">
+    <div class="card">
+      <h2>监测账号 <span class="hint" id="accCount"></span></h2>
+      <p class="desc">勾选的账号会参与检测。可以添加任意多个，题面要求至少 5 个。</p>
+
+      <div class="add-row">
+        <input id="newHandle" placeholder="输入 X 用户名，例如 sama 或 @sama" />
+        <input id="newName" placeholder="显示名（可留空）" class="small" />
+        <button class="btn primary" id="btnAddAccount">添加账号</button>
+      </div>
+      <div class="err" id="addErr"></div>
+
+      <div id="accountList" class="account-list"></div>
+    </div>
+
+    <div class="card">
+      <h2>AI 配置</h2>
+      <p class="desc">TelyClaw 使用 DeepSeek 做摘要、排名理由、内容角度和写稿。不填密钥也能跑，只是没有 AI 生成的内容。</p>
+      <label class="field">
+        <span>DeepSeek API Key</span>
+        <input id="setKey" type="password" placeholder="sk-..." />
+      </label>
+      <label class="field">
+        <span>TelyClaw 账号定位<span class="hint">（AI 判断"值不值得跟进"的依据）</span></span>
+        <textarea id="setPos" rows="2"></textarea>
+      </label>
+      <button class="btn primary" id="btnSaveSettings">保存设置</button>
+      <span class="saved" id="setSaved"></span>
+    </div>
+
+    <div class="card">
+      <h2>数据源</h2>
+      <p class="desc">当前使用内置模拟数据。真实 X API 的接口已预留，填入凭证后切换即可，业务代码不用改。</p>
+      <div class="source-opts">
+        <label class="radio"><input type="radio" name="src" value="mock" checked> 内置模拟数据</label>
+        <label class="radio"><input type="radio" name="src" value="paste"> 粘贴导入的帖子</label>
+        <label class="radio"><input type="radio" name="src" value="x_api"> 真实 X API<span class="hint">（尚未接入）</span></label>
+      </div>
+      <div class="paste-box" id="pasteBox" style="display:none">
+        <p class="desc">每行一条，用竖线分隔：<code>用户名 | 正文 | 2h | 128</code>（后两项可省略）；也支持 JSON 数组。</p>
+        <textarea id="pasteRaw" rows="6" placeholder="sama | Inference cost dropped 40% again. | 2h | 320"></textarea>
+        <button class="btn" id="btnImport">解析并导入</button>
+        <span class="saved" id="importMsg"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 监控 ============================ -->
+  <section class="page hidden" id="page-monitor">
+    <div class="stepbar">
+      <div class="step done" data-step="1"><i>1</i>选账号</div>
+      <div class="step" data-step="2"><i>2</i>选时间窗口</div>
+      <div class="step" data-step="3"><i>3</i>立即检测</div>
+      <div class="step" data-step="4"><i>4</i>热点榜单</div>
+      <div class="step" data-step="5"><i>5</i>Top 精选</div>
+    </div>
+
+    <div class="card">
+      <h2>① 选择要监测的账号</h2>
+      <div class="pick-row">
+        <button class="btn tiny" id="btnAll">全选</button>
+        <button class="btn tiny" id="btnNone">全不选</button>
+        <span class="hint" id="pickCount"></span>
+      </div>
+      <div id="pickList" class="pick-list"></div>
+    </div>
+
+    <div class="card">
+      <h2>② 选择时间窗口</h2>
+      <div class="windows" id="windowBar">
+        <button class="win" data-w="1h">过去 1 小时</button>
+        <button class="win" data-w="4h">过去 4 小时</button>
+        <button class="win" data-w="8h">过去 8 小时</button>
+        <button class="win active" data-w="24h">过去 24 小时</button>
+        <button class="win" data-w="3d">过去 3 天</button>
+      </div>
+      <p class="desc">③ 准备好后点下面的按钮开始检测。</p>
+      <div class="scan-row">
+        <button class="btn primary big" id="btnScan">立即检测</button>
+        <button class="btn tiny" id="btnReseed">换一批模拟数据</button>
+        <label class="chk"><input type="checkbox" id="useAi" checked> 启用 AI（命名/摘要/排名理由/精选）</label>
+      </div>
+    </div>
+
+    <div id="scanResult"></div>
+  </section>
+
+  <!-- ============================ 工作台 ============================ -->
+  <section class="page hidden" id="page-studio">
+    <div class="card">
+      <h2>选择热点</h2>
+      <p class="desc">点一个热点，AI 会给出 3 个内容角度。</p>
+      <div id="studioTopics" class="studio-topics"></div>
+      <div class="empty" id="studioEmpty">还没有检测结果，先去「监控」页点一次「立即检测」。</div>
+    </div>
+
+    <div class="card hidden" id="angleCard">
+      <h2>内容角度 <span class="hint" id="angleTopicName"></span></h2>
+      <div id="angleList" class="angle-list"></div>
+    </div>
+
+    <div class="card hidden" id="draftCard">
+      <h2>帖子候选 <span class="hint" id="draftAngleName"></span></h2>
+      <div id="draftList" class="draft-list"></div>
+    </div>
+
+    <div class="card hidden" id="editorCard">
+      <h2>编辑并发布</h2>
+      <textarea id="editor" rows="7"></textarea>
+      <div class="editor-bar">
+        <span id="charCount" class="chars">0 / 280</span>
+        <button class="btn" id="btnSaveDraft">保存修改</button>
+        <button class="btn primary" id="btnPublish">发布</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ 发布记录 ============================ -->
+  <section class="page hidden" id="page-records">
+    <div class="card">
+      <h2>已发布</h2>
+      <div id="publishedList" class="record-list"></div>
+      <div class="empty" id="pubEmpty">还没有发布过内容。</div>
+    </div>
+    <div class="card">
+      <h2>草稿箱</h2>
+      <div id="draftBox" class="record-list"></div>
+      <div class="empty" id="draftEmpty">还没有草稿。</div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 发布预览弹窗 -->
+<div class="modal hidden" id="publishModal">
+  <div class="modal-box">
+    <h3>确认发布</h3>
+    <p class="desc">这条内容会标记为已发布，并自动复制到剪贴板（可以真的去 X 粘贴）。
+       <b>注意：当前是模拟发布，不会真的发到 X。</b></p>
+    <div class="x-preview">
+      <div class="x-avatar" id="pvAvatar">TC</div>
+      <div class="x-body">
+        <div class="x-head"><b>TelyClaw</b> <span>@telyclaw · <span id="pvTime"></span></span></div>
+        <div class="x-text" id="pvText"></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" id="btnCancelPublish">取消</button>
+      <button class="btn primary" id="btnConfirmPublish">确认发布</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast hidden" id="toast"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
