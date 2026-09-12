@@ -213,14 +213,38 @@ def gen_angles(topic, posts, positioning, api_key):
     data = _call(prompts.content_angles(payload, positioning), api_key,
                  response_format_json=True)
 
+    ANGLE_TYPE = {
+        "hot_take": ("Hot Take", "反共识 / 有立场"),
+        "educational": ("Educational", "讲清楚这件事"),
+        "product": ("TelyClaw Product Angle", "产品角度"),
+    }
+    TYPE_ALIAS = {
+        "hot_take": "hot_take", "hottake": "hot_take", "hot take": "hot_take",
+        "take": "hot_take", "反共识": "hot_take", "观点": "hot_take",
+        "educational": "educational", "education": "educational",
+        "edu": "educational", "科普": "educational", "教育": "educational",
+        "product": "product", "telyclaw": "product", "telyclaw product angle": "product",
+        "product angle": "product", "产品": "product", "产品角度": "product",
+    }
+    ORDER = ["hot_take", "educational", "product"]
+
     angles = []
     for i, item in enumerate((data or {}).get("angles", [])[:3]):
         title = (item.get("title") or "").strip()
         if not title:
             continue
+        raw = (item.get("type") or "").strip().lower()
+        atype = TYPE_ALIAS.get(raw, TYPE_ALIAS.get(raw.replace("-", " ").replace("_", " ")))
+        # 模型没按约定给 type 时，按返回顺序兜底，保证三类齐全
+        if atype not in ANGLE_TYPE and i < len(ORDER):
+            atype = ORDER[i]
+        label, hint = ANGLE_TYPE.get(atype, ("角度", ""))
         angles.append({
             "id": f"{topic.id}_a{i}",
             "topic_id": topic.id,
+            "type": atype or f"other{i}",
+            "type_label": label,
+            "type_hint": hint,
             "title": title,
             "rationale": (item.get("rationale") or "").strip(),
             "hook": (item.get("hook") or "").strip(),
@@ -235,13 +259,17 @@ def gen_posts(topic, angle, posts, positioning, api_key):
     payload = {
         "topic_name": topic.label,
         "topic_summary": topic.summary,
+        "angle_type": angle.get("type", ""),
+        "angle_type_label": angle.get("type_label", ""),
         "angle_title": angle.get("title", ""),
         "angle_rationale": angle.get("rationale", ""),
         "angle_hook": angle.get("hook", ""),
         "sample_posts": _repr_posts(posts, 5),
     }
-    data = _call(prompts.write_posts(payload, positioning), api_key,
-                 response_format_json=True, temperature=0.9)
+
+    def _ask():
+        return _call(prompts.write_posts(payload, positioning), api_key,
+                     response_format_json=True, temperature=0.9)
 
     STYLE_NAME = {
         "opinion": "犀利观点型",
@@ -251,16 +279,28 @@ def gen_posts(topic, angle, posts, positioning, api_key):
         "清单型": "数据清单型",
         "提问型": "提问互动型",
     }
-    out = []
-    for i, item in enumerate((data or {}).get("posts", [])[:3]):
-        content = (item.get("content") or "").strip()
-        if not content:
-            continue
-        style_raw = (item.get("style") or "").strip()
-        out.append({
-            "style": STYLE_NAME.get(style_raw, STYLE_NAME.get(style_raw.lower(), style_raw or f"方案 {i+1}")),
-            "content": content,
-        })
+
+    def _parse(data):
+        out = []
+        for i, item in enumerate((data or {}).get("posts", [])[:3]):
+            content = (item.get("content") or "").strip()
+            if not content:
+                continue
+            style_raw = (item.get("style") or "").strip()
+            out.append({
+                "style": STYLE_NAME.get(style_raw, STYLE_NAME.get(style_raw.lower(), style_raw or f"方案 {i+1}")),
+                "content": content,
+                "value_add": (item.get("value_add") or "").strip(),
+            })
+        return out
+
+    out = _parse(_ask())
+    # 产品角度必须真的带出产品；没有就再要一次（仍是真实 AI 输出，不用预写内容顶替）
+    if (angle.get("type") == "product") and out and not any(
+            "telyclaw" in o["content"].lower() for o in out):
+        retry = _parse(_ask())
+        if retry:
+            out = retry
     if not out:
         raise AIError("parse", "模型没有返回可用的帖子")
     return out

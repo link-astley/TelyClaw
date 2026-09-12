@@ -43,7 +43,7 @@
 | 12 | 排名考虑 TelyClaw Relevance | ◐ | Top 精选那一步用了契合度（AI 判断），但**排行榜分数本身不含 relevance**，且契合度没有量化分数展示 |
 | 13 | 输出 Top Opportunities 并解释原因 | ✅ | 3 个 + 契合度理由 |
 | 14 | 3 个 Content Angles 数量达标 | ✅ | 3 个 |
-| 15 | **Angle 类型覆盖 Hot Take / Educational / TelyClaw Product Angle** | ◐ | 现在让 AI 自选（反共识/数据拆解/实战/提问/反面案例），**缺少强制的"TelyClaw 产品角度"** —— 这是题面明确列的三类之一 |
+| 15 | **Angle 类型覆盖 Hot Take / Educational / TelyClaw Product Angle** | ✅ | 已固定为这三类，各一个，界面有类型标签；产品角度额外做了「没提到产品就再生成一次」的兜底（2026-09-12） |
 | 16 | **内容不能只是 Copy / Rewrite / Summary 原帖** | ◐ | Prompt 里有"不要空话开头、不要编数字"，**没有这条硬约束** |
 | 17 | 内容标准：Trend + TelyClaw Perspective + Original Insight | ◐ | 有账号定位作视角，但 Prompt 未明确要求"原创洞察" |
 | 18 | 至少 1 条可直接发布的 X Post | ✅ | 3 条不同风格 |
@@ -121,8 +121,8 @@
 | 🔴 P0 | README（含 8 项说明 + Production 数据方案） | 必交项 | ✅ 已完成（2026-09-12） |
 | ✅ | GitHub 远端仓库 | ✅ 已完成（2026-09-12）：https://github.com/link-astley/TelyClaw | — |
 | 🔴 P0 | 3-5 分钟 Demo Video | 必交项 | 需要你录屏（我可以写逐句脚本） |
-| 🟡 P1 | Content Angle 缺"TelyClaw Product Angle" | 题面明确列的三类之一，评审大概率会看 | 改一段 Prompt 即可 |
-| 🟡 P1 | "不能只是转述原帖"的硬约束 | 题面加粗级别的红线 | 改一段 Prompt 即可 |
+| ✅ | Content Angle 的 TelyClaw Product Angle | ✅ 已完成（2026-09-12） | — |
+| ✅ | 「不能只是转述原帖」硬约束 | ✅ 已完成（2026-09-12）：写稿 Prompt 红色线 + 每条附 value_add 说明新增了什么 | — |
 | ✅ | Trend Velocity / 快速升温识别 | 已完成（2026-09-12） | — |
 | 🟢 P2 | 90 天增长问题回答 | 不写代码，但要准备 | 我可以帮你起草 |
 | 🟢 P2 | 其余 Bonus（去重、定时、历史追踪、效果回流、全自动） | 题面明说不追求堆功能 | 暂缓 |

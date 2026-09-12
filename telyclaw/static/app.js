@@ -452,7 +452,13 @@ async function loadAngles() {
   state.angles = r.angles;
   $('#angleList').innerHTML = r.angles.map((a, i) => `
     <div class="angle" data-i="${i}">
-      <h4>${i + 1}. ${escapeHtml(a.title)}</h4>
+      <div class="angle-head">
+        <h4>${i + 1}. ${escapeHtml(a.title)}</h4>
+        ${a.type_label
+          ? `<span class="angle-type t-${escapeHtml(a.type || 'other')}">${escapeHtml(a.type_label)}</span>`
+          : ''}
+      </div>
+      ${a.type_hint ? `<div class="angle-hint">${escapeHtml(a.type_hint)}</div>` : ''}
       <p>${escapeHtml(a.rationale)}</p>
       ${a.hook ? `<div class="hook">开头钩子：${escapeHtml(a.hook)}</div>` : ''}
     </div>`).join('');
@@ -477,6 +483,10 @@ async function generateDrafts() {
       topic_id: state.studioTopicId,
       angle_id: state.angle.id,
       angle_title: state.angle.title,
+      angle_type: state.angle.type || '',
+      angle_type_label: state.angle.type_label || '',
+      angle_rationale: state.angle.rationale || '',
+      angle_hook: state.angle.hook || '',
     }),
   });
   if (!r.ok) {
@@ -489,6 +499,10 @@ async function generateDrafts() {
     <div class="draft" data-i="${i}">
       <div class="style">${escapeHtml(d.style)}</div>
       <div class="txt">${escapeHtml(d.content)}</div>
+      ${d.value_add ? `<div class="value-add">新增了什么：${escapeHtml(d.value_add)}</div>` : ''}
+      ${d.content && d.content.length > 260
+        ? `<div class="len-warn">${d.content.length} 字，超出建议长度 260，发布前建议再压一压</div>`
+        : ''}
     </div>`).join('');
   $$('.draft').forEach((el) => (el.onclick = () => {
     $$('.draft').forEach((x) => x.classList.remove('on'));

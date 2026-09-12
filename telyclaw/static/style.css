@@ -157,7 +157,14 @@ textarea{resize:vertical;line-height:1.6}
 .angle{border:1.5px solid var(--line);border-radius:10px;padding:13px;cursor:pointer;transition:.12s}
 .angle:hover{border-color:var(--brand)}
 .angle.on{border-color:var(--brand);background:var(--brand-soft)}
-.angle h4{margin:0 0 6px;font-size:14.5px}
+.angle h4{margin:0;font-size:14.5px}
+.angle-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:5px}
+.angle-type{flex:none;font-size:11px;font-weight:600;padding:2px 7px;border-radius:20px;white-space:nowrap}
+.angle-type.t-hot_take{background:#fee2e2;color:#b91c1c}
+.angle-type.t-educational{background:#dbeafe;color:#1d4ed8}
+.angle-type.t-product{background:#d1fae5;color:#047857}
+.angle-type.t-other{background:#f1f5f9;color:#475569}
+.angle-hint{font-size:11.5px;color:var(--muted);margin-bottom:6px}
 .angle p{margin:0;font-size:12.5px;color:var(--muted)}
 .angle .hook{margin-top:8px;font-size:12px;color:var(--brand);font-style:italic}
 .draft-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
@@ -166,6 +173,8 @@ textarea{resize:vertical;line-height:1.6}
 .draft.on{border-color:var(--brand);background:var(--brand-soft)}
 .draft .style{font-size:11.5px;color:var(--brand);font-weight:600;margin-bottom:6px}
 .draft .txt{font-size:13px;white-space:pre-wrap}
+.draft .value-add{margin-top:8px;padding-top:7px;border-top:1px dashed var(--line);font-size:11.5px;color:var(--muted)}
+.draft .len-warn{margin-top:6px;font-size:11.5px;color:#b45309}
 .editor-bar{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap}
 .chars{font-size:12.5px;color:var(--muted)}
 .chars.over{color:var(--danger);font-weight:600}

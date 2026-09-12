@@ -90,6 +90,10 @@ class DraftIn(BaseModel):
     topic_id: str
     angle_id: str
     angle_title: str = ""
+    angle_type: str = ""
+    angle_type_label: str = ""
+    angle_rationale: str = ""
+    angle_hook: str = ""
     style: str = ""
     content: str = ""
 
@@ -289,7 +293,11 @@ def generate_drafts(body: DraftIn):
         from core.models import Topic
         t = Topic(**{k: v for k, v in topic.items() if k in Topic.__dataclass_fields__})
         variants = tasks.gen_posts(t, {
-            "title": body.angle_title, "rationale": "", "hook": ""
+            "type": body.angle_type,
+            "type_label": body.angle_type_label,
+            "title": body.angle_title,
+            "rationale": body.angle_rationale,
+            "hook": body.angle_hook,
         }, posts, s.get("positioning", ""), api_key)
     except AIError as e:
         return {"ok": False, "error": e.to_dict()}
@@ -304,8 +312,11 @@ def generate_drafts(body: DraftIn):
             "topic_label": topic.get("label", ""),
             "angle_id": body.angle_id,
             "angle_title": body.angle_title,
+            "angle_type": body.angle_type,
+            "angle_type_label": body.angle_type_label,
             "style": v.get("style", ""),
             "content": v.get("content", ""),
+            "value_add": v.get("value_add", ""),
             "edited": False,
             "status": "draft",
             "created_at": store.now_iso(),
