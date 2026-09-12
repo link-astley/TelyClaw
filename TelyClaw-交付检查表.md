@@ -108,9 +108,9 @@
 
 | # | 内容 | 状态 |
 |---|---|---|
-| 1 | **90 天增长问题**：如果这套系统成为 TelyClaw Growth Team 的日常工具，你怎么用它让官方账号在 90 天内实现 10x Qualified Reach？（要按 Trends→Content→Attention→Engagement→Growth 的循环讲） | ▢ |
-| 2 | North Star Metric 的认同与口径：Qualified Engagement Generated from Trends（MVP 阶段用 Qualified Engagement per Trend-generated Post 作 Proxy） | ▢ |
-| 3 | Supporting Metrics 的口径：Trend Detection Lead Time / Trend to Content Time（目标 <5-10 分钟）/ Trend Hit Rate / Content Acceptance Rate / Engagement Lift | ▢ |
+| 1 | **90 天增长问题**：90 天内 10x Qualified Reach | ✅ | 见《TelyClaw-90天增长方案.md》：10x = 产能 2-3x × 命中 1.6-2x × 分发 2-2.5x，按 Trends→Content→Attention→Engagement→Growth 五段各写了「加速点 / 测什么 / 失败信号」，并附「什么情况下做不到」 |
+| 2 | North Star Metric 的认同与口径 | ✅ | 认同题面给的 Qualified Engagement Generated from Trends；MVP 代理指标 = Qualified Engagement per Trend-generated Post（选它是因为样本少时就能算，且不被发布频率掩盖质量下滑）。Qualified 的代理定义：互动率 ≥ 近 30 天中位则曝光全额计入，否则按比例打折，防水帖 |
+| 3 | Supporting Metrics 的口径 | ✅ | 五个指标都给了可计算口径：Detection Lead Time（首次出现 → 被 ≥5 个监控账号同时提及）/ Trend to Content Time（决定跟进 → 发布）/ Trend Hit Rate（互动率 ≥ 基线的比例）/ Content Acceptance Rate / Engagement Lift |
 
 ---
 
@@ -124,5 +124,5 @@
 | ✅ | Content Angle 的 TelyClaw Product Angle | ✅ 已完成（2026-09-12） | — |
 | ✅ | 「不能只是转述原帖」硬约束 | ✅ 已完成（2026-09-12）：写稿 Prompt 红色线 + 每条附 value_add 说明新增了什么 | — |
 | ✅ | Trend Velocity / 快速升温识别 | 已完成（2026-09-12） | — |
-| 🟢 P2 | 90 天增长问题回答 | 不写代码，但要准备 | 我可以帮你起草 |
+| ✅ | 90 天增长问题回答 | ✅ 已完成（2026-09-12）：《TelyClaw-90天增长方案.md》 | — |
 | 🟢 P2 | 其余 Bonus（去重、定时、历史追踪、效果回流、全自动） | 题面明说不追求堆功能 | 暂缓 |
