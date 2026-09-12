@@ -78,7 +78,7 @@
 | # | 交付物 | 状态 | 说明 |
 |---|---|---|---|
 | 1 | Working Demo | ✅ | 本地可跑，端到端已验证 |
-| 2 | Source Code / GitHub Repository | ◐ | 本地仓库已建：主分支 `main`，首次提交 `d634c2a`，28 个文件；`.gitignore` 已屏蔽密钥文件，提交前扫过无密钥命中。**GitHub 远端待建**（需本人登录） |
+| 2 | Source Code / GitHub Repository | ✅ | 已上线：https://github.com/link-astley/TelyClaw （公开仓库，2 次提交，28 个文件；本地与远端已校验字节级一致，已扫描无密钥） |
 | 3 | 3-5 分钟 Demo Video | ▢ | 未录制 |
 | 4 | 简短 README | ✅ | `README.md` 已写（521 行中文），覆盖题面要求的 8 件事 + Production 数据方案 + Mock 数据声明 |
 
@@ -119,9 +119,8 @@
 | 优先级 | 缺口 | 为什么急 | 补起来难不难 |
 |---|---|---|---|
 | 🔴 P0 | README（含 8 项说明 + Production 数据方案） | 必交项 | ✅ 已完成（2026-09-12） |
-| 🔴 P0 | GitHub 远端仓库 | 必交项，本地已就绪，差推送 | 你在网页建空仓库 → 把地址给我 → 我推 |
+| ✅ | GitHub 远端仓库 | ✅ 已完成（2026-09-12）：https://github.com/link-astley/TelyClaw | — |
 | 🔴 P0 | 3-5 分钟 Demo Video | 必交项 | 需要你录屏（我可以写逐句脚本） |
-| 🔴 P0 | GitHub 远端仓库 | 必交项，本地已就绪，差推送 | 你在网页建空仓库 → 把地址给我 → 我推 |
 | 🟡 P1 | Content Angle 缺"TelyClaw Product Angle" | 题面明确列的三类之一，评审大概率会看 | 改一段 Prompt 即可 |
 | 🟡 P1 | "不能只是转述原帖"的硬约束 | 题面加粗级别的红线 | 改一段 Prompt 即可 |
 | ✅ | Trend Velocity / 快速升温识别 | 已完成（2026-09-12） | — |

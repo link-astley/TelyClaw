@@ -4,6 +4,8 @@
 >
 > 这是一个 MVP，为「Growth Lead / Vibe Coding Challenge」而做。当前**不接入真实 X API**，但取数层、发布层都做了接口抽象，填入凭证即可切换到真实数据。
 
+**仓库地址**：https://github.com/link-astley/TelyClaw
+
 ---
 
 ## 目录
