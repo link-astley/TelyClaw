@@ -78,8 +78,8 @@
 | # | 交付物 | 状态 | 说明 |
 |---|---|---|---|
 | 1 | Working Demo | ✅ | 本地可跑，端到端已验证 |
-| 2 | Source Code / GitHub Repository | ✅ | 已上线：https://github.com/link-astley/TelyClaw （公开仓库，2 次提交，28 个文件；本地与远端已校验字节级一致，已扫描无密钥） |
-| 3 | 3-5 分钟 Demo Video | ▢ | 未录制 |
+| 2 | Source Code / GitHub Repository | ✅ | 已上线：https://github.com/link-astley/TelyClaw （公开仓库，7 次提交，30 个文件；本地与远端已校验字节级一致，已扫描无密钥） |
+| 3 | 3-5 分钟 Demo Video | ✅ | 已录制并上传：https://github.com/link-astley/TelyClaw/releases/download/v1.0-demo/TelyClaw-Demo.mp4 （5 分 23 秒，98.3 MB，挂在 Release v1.0-demo）。⚠️ 题面要求 3-5 分钟，实为 5:23，**超时 23 秒，用户决定不剪** |
 | 4 | 简短 README | ✅ | `README.md` 已写（521 行中文），覆盖题面要求的 8 件事 + Production 数据方案 + Mock 数据声明 |
 
 ### README 必须写清的 8 件事（题面逐条列了）
@@ -120,7 +120,7 @@
 |---|---|---|---|
 | 🔴 P0 | README（含 8 项说明 + Production 数据方案） | 必交项 | ✅ 已完成（2026-09-12） |
 | ✅ | GitHub 远端仓库 | ✅ 已完成（2026-09-12）：https://github.com/link-astley/TelyClaw | — |
-| 🔴 P0 | 3-5 分钟 Demo Video | 必交项 | 需要你录屏（我可以写逐句脚本） |
+| ✅ | 3-5 分钟 Demo Video | ✅ 已完成（2026-09-13）：已上传为 Release 附件 | ⚠️ 5:23 超时 23 秒 |
 | ✅ | Content Angle 的 TelyClaw Product Angle | ✅ 已完成（2026-09-12） | — |
 | ✅ | 「不能只是转述原帖」硬约束 | ✅ 已完成（2026-09-12）：写稿 Prompt 红色线 + 每条附 value_add 说明新增了什么 | — |
 | ✅ | Trend Velocity / 快速升温识别 | 已完成（2026-09-12） | — |

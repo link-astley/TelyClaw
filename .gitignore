@@ -26,3 +26,8 @@ Thumbs.db
 
 # ---- 日志 ----
 *.log
+
+# 演示视频体积太大，不进版本库（已作为 GitHub Release 附件发布）
+*.mp4
+*.mov
+*.webm
